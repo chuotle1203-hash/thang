@@ -1,0 +1,9 @@
+# Cấu hình Netlify — trang tĩnh, file nằm ở thư mục gốc
+[build]
+  publish = "."
+
+# Chuyển hướng về index.html (an toàn cho mọi đường dẫn)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

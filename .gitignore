@@ -1,0 +1,11 @@
+# Claude Code / editor config
+.claude/
+memory/
+MEMORY.md
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Logs
+*.log
