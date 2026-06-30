@@ -1,6 +1,13 @@
 # Cấu hình Netlify — trang tĩnh, file nằm ở thư mục gốc
 [build]
   publish = "."
+  functions = "netlify/functions"
+
+# Để các route /.netlify/functions/* chạy đúng (không bị nuốt bởi redirect bên dưới)
+[[redirects]]
+  from = "/.netlify/functions/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
 
 # Chuyển hướng về index.html (an toàn cho mọi đường dẫn)
 [[redirects]]

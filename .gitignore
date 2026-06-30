@@ -1,11 +1,10 @@
-# Claude Code / editor config
-.claude/
-memory/
-MEMORY.md
+# Thư mục này chứa nhiều dự án — chỉ đẩy lên repo các file của WEBSITE THUÊ XE.
+# Bỏ qua tất cả ở thư mục gốc...
+/*
 
-# OS
-Thumbs.db
-.DS_Store
-
-# Logs
-*.log
+# ...trừ các file/thư mục thuộc website thuê xe:
+!/index.html
+!/netlify.toml
+!/README.md
+!/.gitignore
+!/netlify

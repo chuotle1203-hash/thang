@@ -92,6 +92,14 @@
   .hero-trust{display:flex;align-items:center;gap:20px;margin-top:34px;color:#94A3B8;font-size:14px}
   .stars{color:#FBBF24;letter-spacing:2px}
 
+  /* Hero banner image */
+  .hero-banner{position:relative;margin-bottom:44px;border-radius:20px;overflow:hidden;min-height:300px;background:linear-gradient(120deg,#0b3a5e,#13233f);display:grid;place-items:center;border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow-lg)}
+  .hero-banner-img{width:100%;height:100%;min-height:300px;object-fit:cover;display:block}
+  .hero-banner .ph{display:flex;flex-direction:column;align-items:center;gap:14px;color:#7DD3FC;text-align:center;padding:24px}
+  .hero-banner .ph span{font-family:var(--font-head);font-weight:600;font-size:16px;color:#CBD5E1}
+  .hero-banner .ph small{color:#7DD3FC;font-size:13px}
+  .hero-banner .cap{position:absolute;left:20px;bottom:18px;background:rgba(15,23,42,.72);backdrop-filter:blur(6px);color:#fff;padding:10px 16px;border-radius:12px;font-family:var(--font-head);font-weight:600;font-size:15px;display:flex;align-items:center;gap:8px}
+
   /* Booking card */
   .booking{background:#fff;color:var(--color-foreground);border-radius:20px;padding:26px;box-shadow:var(--shadow-lg)}
   .booking h3{font-size:20px;margin-bottom:4px}
@@ -267,7 +275,25 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="container hero-grid">
+  <div class="container">
+
+    <!-- ===== BANNER ẢNH XE =====
+         Khi có ảnh thật, THAY toàn bộ khối <div class="hero-banner">...</div> bên dưới bằng:
+         <div class="hero-banner"><img class="hero-banner-img" src="ten-anh-xe.jpg" alt="Honda Air Blade đời mới"></div>
+         (đặt file ảnh cùng thư mục với index.html) -->
+    <div class="hero-banner">
+      <div class="ph">
+        <svg width="130" height="130" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M5 18h7l4-7h3"/><path d="M9 11l2-5h3"/></svg>
+        <span>Khu vực ảnh Honda Air Blade đời mới</span>
+        <small>(ảnh minh hoạ tạm — gửi ảnh xe thật của bạn để thay vào đây)</small>
+      </div>
+      <div class="cap" aria-hidden="true">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4L12 17l-6.3 4.4L8 14 2 9.4h7.6z"/></svg>
+        Honda Air Blade 2024 · Đời mới nhất
+      </div>
+    </div>
+
+    <div class="hero-grid">
     <div>
       <span class="eyebrow" style="color:#7DD3FC;background:rgba(125,211,252,.12)">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4L12 17l-6.3 4.4L8 14 2 9.4h7.6z"/></svg>
@@ -340,6 +366,7 @@
         <button type="submit" class="btn btn-primary" style="width:100%">Gửi yêu cầu đặt xe</button>
         <p style="text-align:center;font-size:13px;color:var(--color-secondary);margin-top:12px">Không thu phí khi đặt · Miễn phí huỷ trước 12h</p>
       </form>
+    </div>
     </div>
   </div>
 </section>
@@ -610,10 +637,10 @@
     out.innerHTML = fmt(total) + ' <small>/ ' + days + ' ngày</small>';
   }
 
-  // Số Zalo nhận đơn đặt xe
+  // Số Zalo dự phòng (nếu gửi tự động chưa cấu hình)
   const ZALO_PHONE = '0382826488';
-  function handleBooking(e){
-    e.preventDefault();
+
+  function buildOrderText(){
     const name   = document.getElementById('name').value.trim();
     const phone  = document.getElementById('phone').value.trim();
     const model  = document.getElementById('model').value;
@@ -621,27 +648,48 @@
     const daysSel= document.getElementById('days');
     const days   = daysSel.options[daysSel.selectedIndex].text;
     const price  = document.getElementById('priceOut').textContent.replace(/\s+/g,' ').trim();
-
-    const msg =
+    return (
       '🛵 ĐƠN ĐẶT XE - Đà Nẵng Scooter\n' +
       '• Họ tên: ' + name + '\n' +
       '• SĐT: ' + phone + '\n' +
       '• Dòng xe: ' + model + '\n' +
       '• Ngày nhận: ' + (pickup || '(chưa chọn)') + '\n' +
       '• Số ngày: ' + days + '\n' +
-      '• Tạm tính: ' + price;
+      '• Tạm tính: ' + price
+    );
+  }
 
-    // Mở Zalo ngay trong cử chỉ bấm (tránh bị chặn popup)
-    window.open('https://zalo.me/' + ZALO_PHONE, '_blank');
-
-    // Sao chép nội dung đơn để khách dán vào khung chat
+  function zaloFallback(text){
     if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(msg).catch(function(){});
+      navigator.clipboard.writeText(text).catch(function(){});
     }
+    window.open('https://zalo.me/' + ZALO_PHONE, '_blank');
+    alert('Thông tin đã được sao chép — Zalo vừa mở ra, bạn chỉ cần DÁN (Ctrl/Cmd + V) và gửi:\n\n' + text);
+  }
 
-    alert('✅ Zalo đã được mở!\n\nThông tin đặt xe đã được sao chép sẵn — bạn chỉ cần DÁN (Ctrl/Cmd + V) vào khung chat và gửi:\n\n' + msg);
-    e.target.reset();
-    updatePrice();
+  async function handleBooking(e){
+    e.preventDefault();
+    const text = buildOrderText();
+    const btn  = e.target.querySelector('button[type="submit"]');
+    const old  = btn.textContent;
+    btn.disabled = true; btn.textContent = 'Đang gửi...';
+
+    try{
+      const res = await fetch('/.netlify/functions/send-order', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ text: text })
+      });
+      if(!res.ok) throw new Error('send failed: ' + res.status);
+      alert('✅ Đã gửi yêu cầu đặt xe thành công!\nChúng tôi sẽ liên hệ với bạn trong 10 phút. Cảm ơn bạn!');
+      e.target.reset();
+      updatePrice();
+    }catch(err){
+      // Chưa cấu hình Telegram (hoặc chạy local) → quay về Zalo
+      zaloFallback(text);
+    }finally{
+      btn.disabled = false; btn.textContent = old;
+    }
   }
 
   // Reveal on scroll
