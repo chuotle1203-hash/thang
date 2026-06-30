@@ -93,8 +93,8 @@
   .stars{color:#FBBF24;letter-spacing:2px}
 
   /* Hero banner image */
-  .hero-banner{position:relative;margin-bottom:44px;border-radius:20px;overflow:hidden;min-height:300px;background:linear-gradient(120deg,#0b3a5e,#13233f);display:grid;place-items:center;border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow-lg)}
-  .hero-banner-img{width:100%;height:100%;min-height:300px;object-fit:cover;display:block}
+  .hero-banner{position:relative;margin-bottom:44px;border-radius:20px;overflow:hidden;min-height:300px;background:linear-gradient(135deg,#ffffff,#e9f0f7);display:grid;place-items:center;border:1px solid rgba(255,255,255,.12);box-shadow:var(--shadow-lg)}
+  .hero-banner-img{width:100%;max-height:440px;height:auto;object-fit:contain;display:block;padding:8px}
   .hero-banner .ph{display:flex;flex-direction:column;align-items:center;gap:14px;color:#7DD3FC;text-align:center;padding:24px}
   .hero-banner .ph span{font-family:var(--font-head);font-weight:600;font-size:16px;color:#CBD5E1}
   .hero-banner .ph small{color:#7DD3FC;font-size:13px}
@@ -277,19 +277,12 @@
 <section class="hero">
   <div class="container">
 
-    <!-- ===== BANNER ẢNH XE =====
-         Khi có ảnh thật, THAY toàn bộ khối <div class="hero-banner">...</div> bên dưới bằng:
-         <div class="hero-banner"><img class="hero-banner-img" src="ten-anh-xe.jpg" alt="Honda Air Blade đời mới"></div>
-         (đặt file ảnh cùng thư mục với index.html) -->
+    <!-- ===== BANNER ẢNH XE ===== -->
     <div class="hero-banner">
-      <div class="ph">
-        <svg width="130" height="130" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="5" cy="18" r="3"/><circle cx="19" cy="18" r="3"/><path d="M5 18h7l4-7h3"/><path d="M9 11l2-5h3"/></svg>
-        <span>Khu vực ảnh Honda Air Blade đời mới</span>
-        <small>(ảnh minh hoạ tạm — gửi ảnh xe thật của bạn để thay vào đây)</small>
-      </div>
+      <img class="hero-banner-img" src="airblade-hero.webp" alt="Honda Air Blade đời mới màu đỏ" />
       <div class="cap" aria-hidden="true">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4L12 17l-6.3 4.4L8 14 2 9.4h7.6z"/></svg>
-        Honda Air Blade 2024 · Đời mới nhất
+        Honda Air Blade · Đời mới nhất
       </div>
     </div>
 
